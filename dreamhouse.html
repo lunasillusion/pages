@@ -30,7 +30,6 @@ line-height: 1.7;
 overflow-x: hidden;
 }
 
-/* Texture overlay */
 body::before {
 content: '';
 position: fixed;
@@ -71,8 +70,7 @@ letter-spacing: 0.4em;
 text-transform: uppercase;
 color: var(--clay);
 margin-bottom: 2rem;
-opacity: 0;
-animation: fadeUp 1s ease 0.3s forwards;
+animation: fadeUp 1s ease 0.3s both;
 }
 
 .cover-title {
@@ -82,8 +80,7 @@ font-size: clamp(3.5rem, 8vw, 7rem);
 line-height: 1.1;
 color: var(--straw);
 margin-bottom: 1rem;
-opacity: 0;
-animation: fadeUp 1s ease 0.6s forwards;
+animation: fadeUp 1s ease 0.6s both;
 }
 
 .cover-title em {
@@ -97,8 +94,7 @@ font-style: italic;
 font-size: clamp(1rem, 2vw, 1.3rem);
 color: var(--hemp);
 margin-bottom: 3rem;
-opacity: 0;
-animation: fadeUp 1s ease 0.9s forwards;
+animation: fadeUp 1s ease 0.9s both;
 }
 
 .cover-location {
@@ -106,8 +102,7 @@ font-size: 0.75rem;
 letter-spacing: 0.3em;
 text-transform: uppercase;
 color: var(--moss);
-opacity: 0;
-animation: fadeUp 1s ease 1.2s forwards;
+animation: fadeUp 1s ease 1.2s both;
 }
 
 .orb {
@@ -119,7 +114,6 @@ pointer-events: none;
 .orb-1 { width: 400px; height: 400px; background: rgba(196,131,74,0.08); top: -100px; right: -100px; }
 .orb-2 { width: 300px; height: 300px; background: rgba(107,124,90,0.06); bottom: 50px; left: -50px; }
 
-/* Section base */
 section {
 max-width: 860px;
 margin: 0 auto;
@@ -174,7 +168,6 @@ margin-bottom: 1.2rem;
 font-size: 0.95rem;
 }
 
-/* Philosophy block */
 .philosophy {
 background: rgba(61,46,30,0.4);
 border-left: 2px solid var(--clay);
@@ -187,7 +180,6 @@ color: var(--straw);
 line-height: 1.6;
 }
 
-/* Material cards */
 .materials-grid {
 display: grid;
 grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -245,7 +237,6 @@ line-height: 1.6;
 margin: 0;
 }
 
-/* Space layout */
 .spaces {
 display: grid;
 gap: 0;
@@ -276,7 +267,6 @@ margin: 0;
 line-height: 1.7;
 }
 
-/* Inspiration sources */
 .inspirations {
 display: flex;
 flex-wrap: wrap;
@@ -293,7 +283,6 @@ color: var(--hemp);
 letter-spacing: 0.05em;
 }
 
-/* Infrastructure */
 .infra-list {
 list-style: none;
 margin-top: 1.5rem;
@@ -317,7 +306,6 @@ white-space: nowrap;
 min-width: 130px;
 }
 
-/* Builders section */
 .builders-list {
 margin-top: 1.5rem;
 display: grid;
@@ -351,7 +339,6 @@ color: rgba(245,237,216,0.6);
 margin: 0;
 }
 
-/* Notes area */
 .notes-area {
 background: rgba(61,46,30,0.2);
 border: 1px dashed rgba(196,131,74,0.2);
@@ -363,7 +350,6 @@ font-size: 0.88rem;
 min-height: 120px;
 }
 
-/* Footer */
 footer {
 text-align: center;
 padding: 3rem 2rem 4rem;
@@ -377,17 +363,6 @@ border-top: 1px solid rgba(196,131,74,0.1);
 @keyframes fadeUp {
 from { opacity: 0; transform: translateY(20px); }
 to { opacity: 1; transform: translateY(0); }
-}
-
-/* Scroll fade-in */
-.fade-in {
-opacity: 0;
-transform: translateY(16px);
-transition: opacity 0.8s ease, transform 0.8s ease;
-}
-.fade-in.visible {
-opacity: 1;
-transform: translateY(0);
 }
 
 @media (max-width: 600px) {
@@ -410,7 +385,7 @@ transform: translateY(0);
 </div>
 
 <!-- Philosophy -->
-<section class="fade-in">
+<section>
 <div class="section-label">The Vision</div>
 <h2>Not a big space.<br><em>The right space.</em></h2>
 <div class="philosophy">
@@ -421,7 +396,7 @@ transform: translateY(0);
 </section>
 
 <!-- Inspirations -->
-<section class="fade-in">
+<section>
 <div class="section-label">Sources of Inspiration</div>
 <h2>What the world<br>has <em>already shown</em></h2>
 <p>A subconscious attraction to natural buildings, confirmed across years of travel. Each time: comfort, beauty, presence.</p>
@@ -441,7 +416,7 @@ transform: translateY(0);
 </section>
 
 <!-- Structure -->
-<section class="fade-in">
+<section>
 <div class="section-label">Structure & Form</div>
 <h2>The <em>hybrid</em> approach</h2>
 <p>A round or organically shaped structure. The skeleton handles code compliance and structural integrity; everything layered within and around it carries the soul of the building.</p>
@@ -460,7 +435,7 @@ transform: translateY(0);
 </section>
 
 <!-- Materials -->
-<section class="fade-in">
+<section>
 <div class="section-label">Materials Palette</div>
 <h2>What the <em>walls</em><br>are made of</h2>
 <p>Every material chosen for sensory quality, ecological integrity, and regional availability.</p>
@@ -499,7 +474,7 @@ transform: translateY(0);
 </section>
 
 <!-- Spaces -->
-<section class="fade-in">
+<section>
 <div class="section-label">Spatial Design</div>
 <h2>How the <em>space</em><br>is organized</h2>
 <p>One large open volume as the heart. Minimal interior walls. Wet areas clustered together. The principle: maximum openness, minimum division.</p>
@@ -514,4 +489,75 @@ transform: translateY(0);
 </div>
 <div class="space-item">
 <div class="space-name">The Bathroom</div>
-<p class="space-desc">Open or semi-open concept — no full enclosure required. Tadelakt-finished wet surfaces (polished lime plaster, naturally waterproof). Shower at the e
+<p class="space-desc">Open or semi-open concept — no full enclosure required. Tadelakt-finished wet surfaces (polished lime plaster, naturally waterproof). Wet room style with a beautiful drain. Outdoor shower connection if site allows.</p>
+</div>
+<div class="space-item">
+<div class="space-name">The Sleeping Area</div>
+<p class="space-desc">Separated by level or partial wall, not a full room. Elevated platform or loft. Cork or earthen floor. The quietest, darkest corner of the structure.</p>
+</div>
+<div class="space-item">
+<div class="space-name">The Threshold</div>
+<p class="space-desc">A covered outdoor transition space — porch, portal, or ramada. The place between inside and outside. Seating, shade, views. Often the most-used space in a natural home.</p>
+</div>
+<div class="space-item">
+<div class="space-name">The Studio</div>
+<p class="space-desc">A separate small structure or clearly defined zone. North light if possible. Durable floors. The space that serves work without bleeding into rest.</p>
+</div>
+</div>
+</section>
+
+<!-- Infrastructure -->
+<section>
+<div class="section-label">Infrastructure</div>
+<h2>How it <em>works</em></h2>
+<p>Off-grid capable by design. On-grid where it simplifies permitting. Every system chosen for longevity, repairability, and low dependency.</p>
+<ul class="infra-list">
+<li><span>Water</span><span>Municipal or well depending on parcel. Rainwater collection for garden and greywater. Low-flow everything.</span></li>
+<li><span>Heat</span><span>Rocket mass heater as primary — thermal mass stores and radiates for 12–18 hours per firing. Backup mini-split for shoulder seasons.</span></li>
+<li><span>Cooling</span><span>Passive first — thermal mass, cross-ventilation, deep overhangs, strategic shade trees. Mini-split backup only.</span></li>
+<li><span>Power</span><span>Grid-tied solar with battery backup. Sized for modest loads — this is not a high-consumption home.</span></li>
+<li><span>Cooking</span><span>Propane range. Simple, reliable, repairable. Outdoor cooking area as well.</span></li>
+<li><span>Waste</span><span>Composting toilet preferred. Greywater system to planted beds or constructed wetland where code allows.</span></li>
+</ul>
+</section>
+
+<!-- Builders -->
+<section>
+<div class="section-label">The Builders</div>
+<h2>Who could<br><em>build this</em></h2>
+<p>This is a short list of builders, communities, and schools with demonstrated experience in natural building in the Southeast and beyond.</p>
+<div class="builders-list">
+<div class="builder-item">
+<div class="builder-name">Earthaven Ecovillage</div>
+<div class="builder-role">Black Mountain, NC · Community · School</div>
+<p class="builder-desc">45 minutes from Asheville. Active natural building community with decades of cob, timber frame, and earthen construction on site. Workshops, resident builders, local knowledge.</p>
+</div>
+<div class="builder-item">
+<div class="builder-name">Smiling Woods Yurts</div>
+<div class="builder-role">Structural Shell · Kit Option</div>
+<p class="builder-desc">Custom yurt and round structure kits. Can serve as the permitted structural spine around which natural materials are built. Bridges the gap between code compliance and organic form.</p>
+</div>
+<div class="builder-item">
+<div class="builder-name">Appalachian Natural Builders</div>
+<div class="builder-role">Regional Network</div>
+<p class="builder-desc">Loose network of natural builders across WNC. Worth contacting through Earthaven and local permaculture networks. Many have worked with hempcrete specifically post-2018 Farm Bill.</p>
+</div>
+</div>
+</section>
+
+<!-- Notes -->
+<section>
+<div class="section-label">Open Questions</div>
+<h2>What remains<br><em>unresolved</em></h2>
+<p>This document captures what is known. What follows is what remains open — to be answered by the land, the budget, the builder, and time.</p>
+<div class="notes-area">
+Parcel size and topology · Permitting jurisdiction (county vs. city) · Septic or composting toilet feasibility · Structural engineer for hempcrete walls · Timeline · Budget ceiling · Owner-builder license · Phase one vs. full build · Guest structure timing · Studio separate or integrated
+</div>
+</section>
+
+<footer>
+The House · A Living Vision · Asheville Area · Western North Carolina
+</footer>
+
+</body>
+</html>
