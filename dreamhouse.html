@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The House — A Living Vision</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+--earth: #8B6B47;
+--clay: #C4834A;
+--ochre: #D4A45A;
+--straw: #E8D5A3;
+--linen: #F5EDD8;
+--moss: #6B7C5A;
+--bark: #3D2E1E;
+--hemp: #B5A882;
+--cork: #C9A96E;
+--sky: #7A9BAD;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+background-color: #1C1510;
+color: var(--linen);
+font-family: 'Jost', sans-serif;
+font-weight: 300;
+line-height: 1.7;
+overflow-x: hidden;
+}
+
+/* Texture overlay */
+body::before {
+content: '';
+position: fixed;
+inset: 0;
+background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+pointer-events: none;
+z-index: 1000;
+opacity: 0.4;
+}
+
+.cover {
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+text-align: center;
+padding: 4rem 2rem;
+position: relative;
+background: radial-gradient(ellipse at 60% 40%, #3D2510 0%, #1C1510 70%);
+}
+
+.cover::after {
+content: '';
+position: absolute;
+bottom: 0;
+left: 0;
+right: 0;
+height: 1px;
+background: linear-gradient(90deg, transparent, var(--clay), transparent);
+}
+
+.cover-eyebrow {
+font-family: 'Jost', sans-serif;
+font-weight: 200;
+font-size: 0.7rem;
+letter-spacing: 0.4em;
+text-transform: uppercase;
+color: var(--clay);
+margin-bottom: 2rem;
+opacity: 0;
+animation: fadeUp 1s ease 0.3s forwards;
+}
+
+.cover-title {
+font-family: 'Cormorant Garamond', serif;
+font-weight: 300;
+font-size: clamp(3.5rem, 8vw, 7rem);
+line-height: 1.1;
+color: var(--straw);
+margin-bottom: 1rem;
+opacity: 0;
+animation: fadeUp 1s ease 0.6s forwards;
+}
+
+.cover-title em {
+font-style: italic;
+color: var(--ochre);
+}
+
+.cover-subtitle {
+font-family: 'Cormorant Garamond', serif;
+font-style: italic;
+font-size: clamp(1rem, 2vw, 1.3rem);
+color: var(--hemp);
+margin-bottom: 3rem;
+opacity: 0;
+animation: fadeUp 1s ease 0.9s forwards;
+}
+
+.cover-location {
+font-size: 0.75rem;
+letter-spacing: 0.3em;
+text-transform: uppercase;
+color: var(--moss);
+opacity: 0;
+animation: fadeUp 1s ease 1.2s forwards;
+}
+
+.orb {
+position: absolute;
+border-radius: 50%;
+filter: blur(80px);
+pointer-events: none;
+}
+.orb-1 { width: 400px; height: 400px; background: rgba(196,131,74,0.08); top: -100px; right: -100px; }
+.orb-2 { width: 300px; height: 300px; background: rgba(107,124,90,0.06); bottom: 50px; left: -50px; }
+
+/* Section base */
+section {
+max-width: 860px;
+margin: 0 auto;
+padding: 5rem 2.5rem;
+position: relative;
+}
+
+section + section {
+border-top: 1px solid rgba(196,131,74,0.12);
+}
+
+.section-label {
+font-size: 0.65rem;
+letter-spacing: 0.5em;
+text-transform: uppercase;
+color: var(--clay);
+margin-bottom: 2.5rem;
+display: flex;
+align-items: center;
+gap: 1rem;
+}
+.section-label::after {
+content: '';
+flex: 1;
+height: 1px;
+background: linear-gradient(90deg, rgba(196,131,74,0.4), transparent);
+}
+
+h2 {
+font-family: 'Cormorant Garamond', serif;
+font-weight: 300;
+font-size: clamp(2rem, 4vw, 3rem);
+color: var(--straw);
+margin-bottom: 1.5rem;
+line-height: 1.2;
+}
+
+h2 em { color: var(--ochre); font-style: italic; }
+
+h3 {
+font-family: 'Cormorant Garamond', serif;
+font-weight: 400;
+font-size: 1.4rem;
+color: var(--ochre);
+margin-bottom: 0.75rem;
+margin-top: 2.5rem;
+}
+
+p {
+color: rgba(245,237,216,0.75);
+margin-bottom: 1.2rem;
+font-size: 0.95rem;
+}
+
+/* Philosophy block */
+.philosophy {
+background: rgba(61,46,30,0.4);
+border-left: 2px solid var(--clay);
+padding: 2rem 2.5rem;
+margin: 2rem 0;
+font-family: 'Cormorant Garamond', serif;
+font-style: italic;
+font-size: 1.2rem;
+color: var(--straw);
+line-height: 1.6;
+}
+
+/* Material cards */
+.materials-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+gap: 1.5rem;
+margin-top: 2rem;
+}
+
+.material-card {
+background: rgba(61,46,30,0.35);
+border: 1px solid rgba(196,131,74,0.15);
+padding: 1.75rem;
+position: relative;
+overflow: hidden;
+transition: border-color 0.3s ease;
+}
+
+.material-card:hover {
+border-color: rgba(196,131,74,0.4);
+}
+
+.material-card::before {
+content: '';
+position: absolute;
+top: 0; left: 0;
+width: 3px;
+height: 100%;
+}
+
+.material-card.hemp::before { background: var(--hemp); }
+.material-card.cob::before { background: var(--clay); }
+.material-card.cork::before { background: var(--cork); }
+.material-card.timber::before { background: var(--earth); }
+.material-card.lime::before { background: var(--straw); }
+.material-card.stone::before { background: var(--moss); }
+
+.material-name {
+font-family: 'Cormorant Garamond', serif;
+font-size: 1.3rem;
+color: var(--straw);
+margin-bottom: 0.5rem;
+}
+
+.material-role {
+font-size: 0.7rem;
+letter-spacing: 0.25em;
+text-transform: uppercase;
+color: var(--clay);
+margin-bottom: 0.75rem;
+}
+
+.material-desc {
+font-size: 0.85rem;
+color: rgba(245,237,216,0.65);
+line-height: 1.6;
+margin: 0;
+}
+
+/* Space layout */
+.spaces {
+display: grid;
+gap: 0;
+margin-top: 1.5rem;
+}
+
+.space-item {
+display: grid;
+grid-template-columns: 120px 1fr;
+gap: 2rem;
+padding: 1.75rem 0;
+border-bottom: 1px solid rgba(196,131,74,0.08);
+align-items: start;
+}
+
+.space-name {
+font-family: 'Cormorant Garamond', serif;
+font-size: 1.1rem;
+color: var(--ochre);
+font-style: italic;
+padding-top: 0.2rem;
+}
+
+.space-desc {
+font-size: 0.88rem;
+color: rgba(245,237,216,0.65);
+margin: 0;
+line-height: 1.7;
+}
+
+/* Inspiration sources */
+.inspirations {
+display: flex;
+flex-wrap: wrap;
+gap: 0.75rem;
+margin-top: 1.5rem;
+}
+
+.inspiration-tag {
+background: rgba(61,46,30,0.5);
+border: 1px solid rgba(196,131,74,0.2);
+padding: 0.5rem 1.1rem;
+font-size: 0.8rem;
+color: var(--hemp);
+letter-spacing: 0.05em;
+}
+
+/* Infrastructure */
+.infra-list {
+list-style: none;
+margin-top: 1.5rem;
+}
+
+.infra-list li {
+padding: 1rem 0;
+border-bottom: 1px solid rgba(196,131,74,0.08);
+display: flex;
+gap: 1.5rem;
+align-items: baseline;
+font-size: 0.88rem;
+color: rgba(245,237,216,0.65);
+}
+
+.infra-list li span:first-child {
+font-family: 'Cormorant Garamond', serif;
+font-size: 1rem;
+color: var(--ochre);
+white-space: nowrap;
+min-width: 130px;
+}
+
+/* Builders section */
+.builders-list {
+margin-top: 1.5rem;
+display: grid;
+gap: 1.25rem;
+}
+
+.builder-item {
+background: rgba(61,46,30,0.3);
+border: 1px solid rgba(196,131,74,0.12);
+padding: 1.5rem;
+}
+
+.builder-name {
+font-family: 'Cormorant Garamond', serif;
+font-size: 1.2rem;
+color: var(--straw);
+margin-bottom: 0.25rem;
+}
+
+.builder-role {
+font-size: 0.7rem;
+letter-spacing: 0.25em;
+text-transform: uppercase;
+color: var(--clay);
+margin-bottom: 0.6rem;
+}
+
+.builder-desc {
+font-size: 0.83rem;
+color: rgba(245,237,216,0.6);
+margin: 0;
+}
+
+/* Notes area */
+.notes-area {
+background: rgba(61,46,30,0.2);
+border: 1px dashed rgba(196,131,74,0.2);
+padding: 2rem;
+margin-top: 2rem;
+font-style: italic;
+color: rgba(245,237,216,0.4);
+font-size: 0.88rem;
+min-height: 120px;
+}
+
+/* Footer */
+footer {
+text-align: center;
+padding: 3rem 2rem 4rem;
+font-size: 0.7rem;
+letter-spacing: 0.3em;
+text-transform: uppercase;
+color: rgba(245,237,216,0.2);
+border-top: 1px solid rgba(196,131,74,0.1);
+}
+
+@keyframes fadeUp {
+from { opacity: 0; transform: translateY(20px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+/* Scroll fade-in */
+.fade-in {
+opacity: 0;
+transform: translateY(16px);
+transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.fade-in.visible {
+opacity: 1;
+transform: translateY(0);
+}
+
+@media (max-width: 600px) {
+.space-item { grid-template-columns: 1fr; gap: 0.5rem; }
+.infra-list li { flex-direction: column; gap: 0.25rem; }
+.infra-list li span:first-child { min-width: unset; }
+}
+</style>
+</head>
+<body>
+
+<!-- Cover -->
+<div class="cover">
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="cover-eyebrow">A Living Design Brief</div>
+<h1 class="cover-title">The <em>House</em></h1>
+<div class="cover-subtitle">A hand-sculpted home on Appalachian land</div>
+<div class="cover-location">Asheville Area · Western North Carolina</div>
+</div>
+
+<!-- Philosophy -->
+<section class="fade-in">
+<div class="section-label">The Vision</div>
+<h2>Not a big space.<br><em>The right space.</em></h2>
+<div class="philosophy">
+"I want to live inside something that was made — not assembled. A space that breathes, that holds warmth, that smells like the earth it came from. I've stayed in buildings like this on four continents and I've always felt the same thing: I'm home."
+</div>
+<p>What follows is a living document. It will grow as the vision clarifies. The through-line running through every space that has ever felt right: organic curves, natural materials, abundant light, connection to the outside, handmade details, and the complete absence of hard industrial surfaces.</p>
+<p>This is not a style choice. It is a philosophy. And it is entirely buildable.</p>
+</section>
+
+<!-- Inspirations -->
+<section class="fade-in">
+<div class="section-label">Sources of Inspiration</div>
+<h2>What the world<br>has <em>already shown</em></h2>
+<p>A subconscious attraction to natural buildings, confirmed across years of travel. Each time: comfort, beauty, presence.</p>
+<div class="inspirations">
+<div class="inspiration-tag">Balinese design</div>
+<div class="inspiration-tag">Thai open huts</div>
+<div class="inspiration-tag">Hand-sculpted house · Portugal</div>
+<div class="inspiration-tag">Thatched hobbit hut · Zipolite</div>
+<div class="inspiration-tag">Cob cabin · Mexican mountains</div>
+<div class="inspiration-tag">Earthaven EcoVillage</div>
+<div class="inspiration-tag">Mongolian gers · Portugal</div>
+<div class="inspiration-tag">Open shower · Costa Rica</div>
+<div class="inspiration-tag">Mosaic wall work</div>
+<div class="inspiration-tag">Rocket mass heaters</div>
+<div class="inspiration-tag">Dome light · natural skylight</div>
+</div>
+</section>
+
+<!-- Structure -->
+<section class="fade-in">
+<div class="section-label">Structure & Form</div>
+<h2>The <em>hybrid</em> approach</h2>
+<p>A round or organically shaped structure. The skeleton handles code compliance and structural integrity; everything layered within and around it carries the soul of the building.</p>
+
+<h3>The Skeleton</h3>
+<p>A timber frame or prefab round shell — potentially a <strong>Smiling Woods Yurts</strong> kit as the structural spine — engineered to code, permitted conventionally. Local Appalachian hardwood posts as primary interior vertical elements, sourced from regional sawyers, natural character preserved.</p>
+
+<h3>The Walls</h3>
+<p>Hempcrete cast in place around the timber frame using flexible formwork to achieve rounded corners and organic curves. Cob used for sculptural detail elements — arches, niches, window surrounds, built-in seating. The two materials are natural partners.</p>
+
+<h3>The Surface</h3>
+<p>Earthen or lime plaster finish throughout — interior and exterior. No paint required; tinted naturally through the plaster itself. Mosaic work pressed directly into soft walls. The building becomes a slow art project rather than a construction site.</p>
+
+<h3>The Roof</h3>
+<p>Generous overhangs (minimum 2–3 ft) to protect earthen walls from Asheville's rainfall. Metal roofing or natural materials depending on form. A skylight or dome element for the quality of light that makes circular spaces feel alive.</p>
+</section>
+
+<!-- Materials -->
+<section class="fade-in">
+<div class="section-label">Materials Palette</div>
+<h2>What the <em>walls</em><br>are made of</h2>
+<p>Every material chosen for sensory quality, ecological integrity, and regional availability.</p>
+<div class="materials-grid">
+<div class="material-card hemp">
+<div class="material-name">Hempcrete</div>
+<div class="material-role">Walls · Insulation · Mass</div>
+<p class="material-desc">Hemp hurd + lime binder. Thermally massive, hygroscopic, mold-resistant. Can be sculpted into curves. Carbon-negative. Sourced regionally from the Carolinas.</p>
+</div>
+<div class="material-card cob">
+<div class="material-name">Cob</div>
+<div class="material-role">Sculptural Elements</div>
+<p class="material-desc">Clay, sand, straw. Hand-formed for arches, niches, benches, window surrounds, fireplace surround. The material that makes a house feel hand-made.</p>
+</div>
+<div class="material-card cork">
+<div class="material-name">Cork</div>
+<div class="material-role">Flooring · Detail Work</div>
+<p class="material-desc">Soft underfoot, warm, natural. Ideal for bedroom floors. Can be used in geometric or decorative patterns. Pairs beautifully with hempcrete walls — both deeply natural, both tactile.</p>
+</div>
+<div class="material-card timber">
+<div class="material-name">Local Timber</div>
+<div class="material-role">Frame · Interior Posts · Beams</div>
+<p class="material-desc">Appalachian hardwood from regional sawyers. Post-Helene downed timber being milled locally. Natural character — not dimensioned box-store lumber.</p>
+</div>
+<div class="material-card lime">
+<div class="material-name">Earthen & Lime Plaster</div>
+<div class="material-role">All Surfaces · Finish</div>
+<p class="material-desc">Interior and exterior. Naturally tinted — no paint needed, no siding needed. Tadelakt (polished lime) for wet areas. The surface that makes a cob house glow.</p>
+</div>
+<div class="material-card stone">
+<div class="material-name">Local Stone</div>
+<div class="material-role">Foundation · Accent</div>
+<p class="material-desc">Appalachian fieldstone for rubble trench foundation, outdoor walls, pathway edging. Abundant on most WNC parcels. Zero transport cost if on-site.</p>
+</div>
+</div>
+</section>
+
+<!-- Spaces -->
+<section class="fade-in">
+<div class="section-label">Spatial Design</div>
+<h2>How the <em>space</em><br>is organized</h2>
+<p>One large open volume as the heart. Minimal interior walls. Wet areas clustered together. The principle: maximum openness, minimum division.</p>
+<div class="spaces">
+<div class="space-item">
+<div class="space-name">The Main Space</div>
+<p class="space-desc">Large, open, undivided. Living, cooking, eating as one continuous environment. Curved walls, natural light from dome or skylight, rocket mass heater as the thermal and visual center of the home.</p>
+</div>
+<div class="space-item">
+<div class="space-name">The Kitchen</div>
+<p class="space-desc">Integrated into the main space. Cob or hempcrete counters. Earthen plaster walls. No upper cabinets — open shelving with natural wood. Propane cooking.</p>
+</div>
+<div class="space-item">
+<div class="space-name">The Bathroom</div>
+<p class="space-desc">Open or semi-open concept — no full enclosure required. Tadelakt-finished wet surfaces (polished lime plaster, naturally waterproof). Shower at the e
