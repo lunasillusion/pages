@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<title>The Build Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --clay:   #C4834A;
+    --ochre:  #D4A45A;
+    --straw:  #E8D5A3;
+    --linen:  #F5EDD8;
+    --moss:   #6B7C5A;
+    --hemp:   #B5A882;
+    --cork:   #C9A96E;
+    --bark:   #3D2E1E;
+    --dark:   #1C1510;
+    --darker: #150F0A;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  html, body {
+    background-color: var(--dark) !important;
+    color: var(--linen) !important;
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+
+  /* COVER */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    position: relative;
+    z-index: 1;
+    background: radial-gradient(ellipse at 55% 35%, #3D2008 0%, var(--dark) 68%);
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--clay), transparent);
+  }
+  .orb {
+    position: absolute; border-radius: 50%;
+    filter: blur(90px); pointer-events: none; z-index: 0;
+  }
+  .orb-1 { width:450px; height:450px; background:rgba(196,131,74,0.07); top:-120px; right:-120px; }
+  .orb-2 { width:320px; height:320px; background:rgba(107,124,90,0.05); bottom:0; left:-80px; }
+
+  .cover-eyebrow {
+    font-weight:200; font-size:0.68rem; letter-spacing:0.45em;
+    text-transform:uppercase; color: var(--clay) !important;
+    margin-bottom:2rem; position:relative; z-index:1;
+    opacity:0; animation: fadeUp 1s ease 0.3s forwards;
+  }
+  .cover-title {
+    font-family:'Cormorant Garamond',serif; font-weight:300;
+    font-size:clamp(3.5rem,8vw,7rem); line-height:1.08;
+    color: var(--straw) !important; margin-bottom:1rem;
+    position:relative; z-index:1;
+    opacity:0; animation: fadeUp 1s ease 0.6s forwards;
+  }
+  .cover-title em { font-style:italic; color: var(--ochre) !important; }
+  .cover-sub {
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:clamp(1rem,2.2vw,1.35rem); color: var(--hemp) !important;
+    margin-bottom:3rem; position:relative; z-index:1;
+    opacity:0; animation: fadeUp 1s ease 0.9s forwards;
+  }
+  .cover-loc {
+    font-size:0.7rem; letter-spacing:0.3em; text-transform:uppercase;
+    color: var(--moss) !important; position:relative; z-index:1;
+    opacity:0; animation: fadeUp 1s ease 1.2s forwards;
+  }
+
+  /* SECTIONS */
+  section {
+    max-width:880px; margin:0 auto;
+    padding:5rem 2.5rem;
+    position:relative; z-index:1;
+    background-color: var(--dark) !important;
+  }
+  section + section { border-top:1px solid rgba(196,131,74,0.1); }
+
+  .section-label {
+    font-size:0.63rem; letter-spacing:0.5em; text-transform:uppercase;
+    color: var(--clay) !important; margin-bottom:2.5rem;
+    display:flex; align-items:center; gap:1rem;
+  }
+  .section-label::after {
+    content:''; flex:1; height:1px;
+    background:linear-gradient(90deg,rgba(196,131,74,0.4),transparent);
+  }
+
+  h2 {
+    font-family:'Cormorant Garamond',serif; font-weight:300;
+    font-size:clamp(2rem,4vw,3rem); color: var(--straw) !important;
+    margin-bottom:1.5rem; line-height:1.18;
+  }
+  h2 em { color: var(--ochre) !important; font-style:italic; }
+
+  h3 {
+    font-family:'Cormorant Garamond',serif; font-weight:400;
+    font-size:1.4rem; color: var(--ochre) !important;
+    margin-bottom:0.75rem; margin-top:2.5rem;
+  }
+
+  p { color:rgba(245,237,216,0.73) !important; margin-bottom:1.2rem; font-size:0.93rem; }
+
+  .philosophy {
+    background:rgba(61,32,8,0.45); border-left:2px solid var(--clay);
+    padding:2rem 2.5rem; margin:2rem 0;
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:1.2rem; color: var(--straw) !important; line-height:1.65;
+  }
+
+  /* TIMELINE */
+  .timeline { margin-top:2rem; position:relative; }
+  .timeline::before {
+    content:''; position:absolute;
+    left:44px; top:12px; bottom:12px; width:1px;
+    background:linear-gradient(180deg,var(--clay),rgba(196,131,74,0.08));
+  }
+
+  .tl-item {
+    display:grid; grid-template-columns:90px 1fr;
+    gap:0; margin-bottom:0; position:relative;
+  }
+
+  .tl-marker {
+    display:flex; flex-direction:column;
+    align-items:center; padding-top:0.2rem;
+    position:relative; z-index:1;
+  }
+
+  .tl-dot {
+    width:10px; height:10px; border-radius:50%;
+    background:var(--clay); margin-top:0.35rem;
+    box-shadow:0 0 0 3px rgba(196,131,74,0.15);
+    flex-shrink:0;
+  }
+
+  .tl-period {
+    font-size:0.62rem; letter-spacing:0.15em; text-transform:uppercase;
+    color: var(--clay) !important; writing-mode:vertical-rl;
+    transform:rotate(180deg); margin-top:0.5rem;
+    white-space:nowrap;
+  }
+
+  .tl-content {
+    padding:0 0 3.5rem 2rem;
+    border-left:none;
+  }
+
+  .tl-title {
+    font-family:'Cormorant Garamond',serif; font-size:1.4rem;
+    color: var(--straw) !important; margin-bottom:0.5rem; line-height:1.2;
+  }
+
+  .tl-title em { color: var(--ochre) !important; font-style:italic; }
+
+  .tl-body {
+    font-size:0.88rem; color:rgba(245,237,216,0.65) !important;
+    line-height:1.75; margin-bottom:0;
+  }
+
+  .tl-tasks {
+    list-style:none; margin-top:0.85rem;
+  }
+  .tl-tasks li {
+    font-size:0.85rem; color:rgba(245,237,216,0.62) !important;
+    padding:0.4rem 0 0.4rem 1.5rem; position:relative;
+    border-bottom:1px solid rgba(196,131,74,0.06);
+  }
+  .tl-tasks li::before {
+    content:'—'; position:absolute; left:0;
+    color: var(--clay) !important;
+    font-family:'Cormorant Garamond',serif;
+  }
+  .tl-tasks li strong { color: var(--straw) !important; font-weight:400; }
+
+  .tl-note {
+    margin-top:0.85rem;
+    background:rgba(107,124,90,0.1); border-left:2px solid var(--moss);
+    padding:0.9rem 1.25rem; font-size:0.83rem;
+    color:rgba(245,237,216,0.58) !important; font-style:italic; line-height:1.65;
+  }
+
+  /* BUDGET TABLE */
+  .budget-wrap { margin-top:1.75rem; }
+
+  .budget-category {
+    font-family:'Cormorant Garamond',serif; font-size:1.1rem;
+    color: var(--ochre) !important; margin:2rem 0 0.5rem;
+    padding-bottom:0.4rem;
+    border-bottom:1px solid rgba(196,131,74,0.2);
+  }
+
+  table.budget {
+    width:100%; border-collapse:collapse; font-size:0.87rem;
+  }
+  table.budget td {
+    padding:0.7rem 0.5rem;
+    border-bottom:1px solid rgba(196,131,74,0.06);
+    color:rgba(245,237,216,0.68) !important;
+    vertical-align:top;
+  }
+  table.budget td:first-child {
+    font-family:'Cormorant Garamond',serif;
+    color: var(--ochre) !important; font-size:0.95rem;
+    width:180px; padding-right:1.5rem;
+  }
+  table.budget td:last-child {
+    text-align:right; white-space:nowrap;
+    color:rgba(245,237,216,0.5) !important; font-size:0.82rem;
+  }
+  table.budget td.note {
+    font-style:italic; font-size:0.8rem;
+    color:rgba(245,237,216,0.38) !important;
+    padding-top:0; border-bottom:none;
+  }
+  table.budget tr.total td {
+    border-top:1px solid rgba(196,131,74,0.25);
+    border-bottom:none;
+    color: var(--straw) !important; font-weight:400;
+    padding-top:1.1rem;
+  }
+  table.budget tr.total td:first-child { color: var(--clay) !important; font-size:1.05rem; }
+  table.budget tr.total td:last-child { color: var(--ochre) !important; }
+
+  .grand-total {
+    margin-top:2.5rem;
+    background:rgba(61,32,8,0.5); border:1px solid rgba(196,131,74,0.2);
+    padding:1.75rem 2rem;
+  }
+  .grand-total-label {
+    font-size:0.65rem; letter-spacing:0.4em; text-transform:uppercase;
+    color: var(--clay) !important; margin-bottom:0.75rem;
+  }
+  .grand-total-range {
+    font-family:'Cormorant Garamond',serif; font-size:2rem;
+    color: var(--straw) !important; line-height:1.2;
+  }
+  .grand-total-range em { color: var(--ochre) !important; font-style:normal; }
+  .grand-total-mid {
+    margin-top:0.5rem; font-size:0.85rem;
+    color:rgba(245,237,216,0.55) !important;
+  }
+
+  /* ARCHITECT SECTION */
+  .architect-cards { display:grid; gap:1.1rem; margin-top:1.5rem; }
+  .architect-card {
+    background:rgba(40,25,12,0.4); border:1px solid rgba(196,131,74,0.1);
+    padding:1.4rem 1.6rem; transition:border-color 0.3s;
+  }
+  .architect-card:hover { border-color:rgba(196,131,74,0.3); }
+  .ac-name {
+    font-family:'Cormorant Garamond',serif; font-size:1.2rem;
+    color: var(--straw) !important; margin-bottom:0.2rem;
+  }
+  .ac-role {
+    font-size:0.67rem; letter-spacing:0.22em; text-transform:uppercase;
+    color: var(--clay) !important; margin-bottom:0.55rem;
+  }
+  .ac-note {
+    font-size:0.83rem; color:rgba(245,237,216,0.58) !important; line-height:1.6;
+  }
+  .ac-fee {
+    display:inline-block; margin-top:0.6rem;
+    font-size:0.75rem; color: var(--moss) !important;
+    border:1px solid rgba(107,124,90,0.3); padding:0.2rem 0.6rem;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align:center; padding:3rem 2rem 4.5rem;
+    font-size:0.67rem; letter-spacing:0.32em; text-transform:uppercase;
+    color:rgba(245,237,216,0.16) !important;
+    border-top:1px solid rgba(196,131,74,0.08);
+    background-color: var(--dark) !important;
+    position:relative; z-index:1;
+  }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(22px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+  .fade-in {
+    opacity:0; transform:translateY(16px);
+    transition:opacity 0.85s ease, transform 0.85s ease;
+  }
+  .fade-in.visible { opacity:1; transform:translateY(0); }
+
+  @media (max-width:600px) {
+    .tl-item { grid-template-columns:60px 1fr; }
+    .tl-period { display:none; }
+    table.budget td:first-child { width:120px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="cover-eyebrow">From Contract to Keys</div>
+  <h1 class="cover-title">The <em>Build Plan</em></h1>
+  <div class="cover-sub">Timeline, budget, and sequence for a 900 sq ft timber frame + hempcrete home</div>
+  <div class="cover-loc">Asheville Area · Western North Carolina</div>
+</div>
+
+<!-- THE PHILOSOPHY -->
+<section class="fade-in">
+  <div class="section-label">The Approach</div>
+  <h2>One build.<br><em>Done right.</em></h2>
+  <div class="philosophy">
+    "Bones + Body + Skin. The timber frame is the bones. The hempcrete is the body — insulation, thermal mass, and wall in one. The earthen plaster is the skin. No drywall. No siding. No synthetic materials anywhere in the wall assembly."
+  </div>
+  <p>A simple rectangle — Portuguese farmhouse form — approximately 24 x 38 feet. One story with a sleeping loft under the ridge. South-facing for light and passive solar. Two interior doors only: the bedroom and the toilet room. Everything else open. Hemp blocks laid like masonry around a local timber frame, plastered inside with earth, rendered outside with lime. The house that is also its own art project.</p>
+  <p>The architect is not a luxury here — it is the first call. For a hempcrete build in North Carolina, Tim Callahan has permitted 11 of these homes and co-authored the building code appendix that makes it possible. He is simultaneously your designer, your code navigator, and the most important person in the room. Budget his fees as infrastructure, not overhead.</p>
+</section>
+
+<!-- ARCHITECT FEES -->
+<section class="fade-in">
+  <div class="section-label">The Architect · First Call</div>
+  <h2>Design fees —<br><em>what to expect</em></h2>
+  <p>For an unconventional build like this, architectural fees run higher than standard residential design because the drawings need to address hempcrete-specific details, engineer coordination, and county-level permitting negotiation. Budget 8–12% of total construction cost — roughly $15,000–28,000 for this project. That range covers design, engineering coordination, permit drawings, and construction oversight.</p>
+
+  <div class="architect-cards">
+    <div class="architect-card">
+      <div class="ac-name">Tim Callahan</div>
+      <div class="ac-role">Hemp Building Pioneer · Designer · Asheville NC</div>
+      <p class="ac-note">13 years, 11 permitted hempcrete homes in the Carolinas. Co-authored the 2024 IRC Appendix BL for hempcrete — the code that makes your build permittable. Recently returned to active practice. He designs, specifies, and navigates permits as a single engagement. The single most important relationship in this project.</p>
+      <span class="ac-fee">First call — before anything else</span>
+    </div>
+    <div class="architect-card">
+      <div class="ac-name">April Magill · Root Down Designs</div>
+      <div class="ac-role">Licensed Architect · Charleston SC · Carolinas Practice</div>
+      <p class="ac-note">Licensed firm, one of the few in the Carolinas designing in hempcrete, rammed earth, cob, and compressed earth block. Has partnered directly with Callahan. Brings licensed architect stamp required for permit submission in most NC counties — valuable if Callahan's engagement doesn't include this.</p>
+      <span class="ac-fee">~8–12% of construction cost</span>
+    </div>
+    <div class="architect-card">
+      <div class="ac-name">Karen George · Build Like a Bird</div>
+      <div class="ac-role">Natural Builder · Asheville · Workshops</div>
+      <p class="ac-note">Not an architect — a builder. But attending her hands-on hempcrete workshop before breaking ground changes what the build feels like. You will understand your own walls at a material level. This is $200–400 of education that pays back in confidence throughout the project.</p>
+      <span class="ac-fee">Workshop fee only — attend early</span>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="fade-in">
+  <div class="section-label">The Sequence</div>
+  <h2>Day one to<br><em>move-in day</em></h2>
+  <p>This is not a fast build. A natural build done well takes 18–24 months from land contract to move-in. That is not a flaw — it is the nature of working with materials that cure slowly, permitting processes that require patience, and an owner-builder involvement that cannot be rushed. The pace is part of what gives the building its soul.</p>
+
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-marker">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Months 1–2</div>
+      </div>
+      <div class="tl-content">
+        <div class="tl-title">Land contract signed.<br><em>The clock starts.</em></div>
+        <p class="tl-body">Due diligence period — typically 30–60 days before closing. Use this window hard. Every action here compresses the overall timeline.</p>
+        <ul class="tl-tasks">
+          <li><strong>Perc test</strong> — required for septic permit. Order immediately, results take 2–4 weeks.</li>
+          <li><strong>Survey</strong> — if not already done. Needed for permit application. ~$2,000.</li>
+          <li><strong>County pre-application meeting</strong> — Madison or Yancey will meet informally before you submit. Bring the hempcrete IRC appendix. Know your county's posture before closing.</li>
+          <li><strong>Call Tim Callahan</strong> — introduce the project. Even a 30-minute conversation shapes everything that follows.</li>
+          <li><strong>Attend a Build Like a Bird workshop</strong> — if one is scheduled, go now before design begins.</li>
+          <li><strong>Order soil test</strong> — clay content on Appalachian land is often excellent for on-site cob and plaster aggregate.</li>
+        </ul>
+        <div class="tl-note">NC law requires residential permit reviews to start within 15 business days of submission. The wait is in the preparation, not the review itself.</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-marker">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Months 2–5</div>
+      </div>
+      <div class="tl-content">
+        <div class="tl-title">Design &amp; permits.<br><em>The slow season.</em></div>
+        <p class="tl-body">The design phase for a hempcrete build is longer than conventional because the drawings must address structural engineering, hempcrete wall detailing, moisture management, and the IRC Appendix BL specifications. Rushing this phase costs money later.</p>
+        <ul class="tl-tasks">
+          <li><strong>Engage Tim Callahan or April Magill</strong> for full design and permit drawings</li>
+          <li><strong>Structural engineer</strong> — required for timber frame design and hempcrete wall specs. Callahan typically has existing relationships.</li>
+          <li><strong>Finalize floor plan</strong> — 900 sq ft rectangle, loft, two interior doors, wet core on one wall</li>
+          <li><strong>Window and door schedule</strong> — fixed glass for large openings, operable casements for ventilation, skylight over loft, French door to screened porch</li>
+          <li><strong>Submit permit application</strong> with sealed drawings, engineering, hempcrete material data sheets</li>
+          <li><strong>Order hemp blocks</strong> — Hemp and Block (Colorado) ships within 1–3 business days for standard quantities. Order early so supply is waiting, not the reverse.</li>
+          <li><strong>Source local timber</strong> — connect with WNC sawyers for rough-sawn posts and beams. Post-Helene downed timber being actively milled.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-marker">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Months 4–6</div>
+      </div>
+      <div class="tl-content">
+        <div class="tl-title">Site development.<br><em>Making the land ready.</em></div>
+        <p class="tl-body">This phase overlaps with permitting and can run in parallel. Remote Appalachian sites require more site work than accessible lots — budget time and money accordingly.</p>
+        <ul class="tl-tasks">
+          <li><strong>Driveway</strong> — cleared, graded, graveled. This is the critical access path for every subsequent delivery.</li>
+          <li><strong>Well drilling</strong> — schedule early, well drillers in WNC are booked out. This is the longest lead-time item in site development.</li>
+          <li><strong>Site clearing</strong> — build footprint and staging area only. Preserve trees wherever possible — they are your future shade and privacy.</li>
+          <li><strong>Temporary power</strong> — construction panel if going grid-tied temporarily, or generator setup</li>
+          <li><strong>Start the garden</strong> — fruit trees go in the ground now. They take five years to bear. The clock starts here regardless of everything else.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-marker">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Months 6–8</div>
+      </div>
+      <div class="tl-content">
+        <div class="tl-title">Foundation &amp; frame.<br><em>The bones go up.</em></div>
+        <p class="tl-body">Permit in hand. This is the exciting phase — the building becomes visible on the land for the first time. A rubble trench foundation and simple timber frame go up fast with the right crew.</p>
+        <ul class="tl-tasks">
+          <li><strong>Rubble trench foundation</strong> — fieldstone from the land where possible, concrete grade beam. 2–3 weeks with crew.</li>
+          <li><strong>Timber frame erection</strong> — local rough-sawn posts and beams. A simple rectangle raises in 3–5 days. The most viscerally satisfying week of the project.</li>
+          <li><strong>Roof structure and metal roofing</strong> — structure must be under roof <em>before</em> hempcrete walls are laid. This is non-negotiable — rain on fresh hempcrete is a serious problem.</li>
+          <li><strong>Windows and doors rough openings</strong> framed into the timber structure</li>
+          <li><strong>Loft platform framing</strong> — structural support for the sleeping loft integrated into the frame</li>
+        </ul>
+        <div class="tl-note">The roof goes on before the walls are filled. This is the correct hempcrete sequence — always structure under cover first, then walls.</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-marker">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Months 8–11</div>
+      </div>
+      <div class="tl-content">
+        <div class="tl-title">Hemp block walls.<br><em>The body of the building.</em></div>
+        <p class="tl-body">The walls go in. Hemp blocks laid like masonry around the timber frame — pre-cured, no waiting for wet hempcrete to dry. One minute per square foot. Owner-builder participation is most meaningful here — this is learnable work that directly reduces cost and deepens your relationship with the building.</p>
+        <ul class="tl-tasks">
+          <li><strong>Hemp blocks delivered</strong> — stage near the build, keep dry. They arrive cured and ready.</li>
+          <li><strong>Lay blocks around timber frame</strong> — staggered courses, lime mortar, notched blocks key into the stud framing</li>
+          <li><strong>Window and door bucks installed</strong> — hempcrete laid up to and around all openings</li>
+          <li><strong>Wall inspections</strong> — county inspector for framing and rough-in before closing walls</li>
+          <li><strong>Rough electrical, plumbing, solar conduit</strong> — run before plaster goes on. Wet core (kitchen + bathroom) on one wall keeps this simple.</li>
+          <li><strong>Instahot water heater rough-in</strong> — propane line stubbed in</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-marker">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Months 11–14</div>
+      </div>
+      <div class="tl-content">
+        <div class="tl-title">Plaster, render, surfaces.<br><em>The skin arrives.</em></div>
+        <p class="tl-body">This is where the building transforms. Earthen plaster goes directly onto the hemp blocks — no drywall, no substrate. The porous surface keys beautifully. Two coats inside, lime render outside. The building begins to glow.</p>
+        <ul class="tl-tasks">
+          <li><strong>Scratch coat (first coat)</strong> — earthen plaster pressed firmly into hemp block surface, key coat, left textured to receive finish coat</li>
+          <li><strong>Finish coat</strong> — tinted naturally with iron oxide pigments. The color of the walls is decided here.</li>
+          <li><strong>Lime render exterior</strong> — two coats, protects hempcrete from Asheville's 45" annual rainfall. Critical for longevity.</li>
+          <li><strong>Tadelakt in wet areas</strong> — bathroom shower, kitchen splashback. Polished lime, naturally waterproof, beautiful.</li>
+          <li><strong>Cork floors laid</strong> — main level and loft. Glued down after subfloor.</li>
+          <li><strong>Windows and doors installed</strong> — fixed glass, operable casements, French door to screened porch, loft skylight</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-marker">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Months 14–17</div>
+      </div>
+      <div class="tl-content">
+        <div class="tl-title">Kitchen, bathroom, systems.<br><em>The house becomes livable.</em></div>
+        <ul class="tl-tasks">
+          <li><strong>Kitchen installation</strong> — open shelving, natural counters, propane range, deep sink</li>
+          <li><strong>Bathroom finish</strong> — soaking tub, tadelakt shower, long vanity, mosaic feature wall</li>
+          <li><strong>Euro toilet room</strong> — separate, simple, extra sink</li>
+          <li><strong>Instahot water heater installed</strong> — propane on-demand, minimal and efficient</li>
+          <li><strong>Mini-split installation</strong> — 1–2 heads, heating and cooling backup to the wood stove</li>
+          <li><strong>Electrical finish</strong> — fixtures, outlets, lighting throughout</li>
+          <li><strong>Solar system installation</strong> — panels, lithium battery bank, inverter, connection to panel</li>
+          <li><strong>Septic installation</strong> — connected to bathroom wet core</li>
+          <li><strong>Rain barrel system</strong> — integrated into roof drainage, architecturally considered</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-marker">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Months 17–20</div>
+      </div>
+      <div class="tl-content">
+        <div class="tl-title">Cob details, porch, landscape.<br><em>The soul is added.</em></div>
+        <p class="tl-body">This phase can begin before move-in or continue after. The cob sculptural work is the slowest, most meditative part — and there is no deadline on beauty. The building is already livable. Now it becomes yours.</p>
+        <ul class="tl-tasks">
+          <li><strong>Rocket mass heater or wood stove</strong> — cob surround built by hand around the stove. The thermal and visual center of the home.</li>
+          <li><strong>Cob niches, window reveals, built-in bench</strong> — sculpted details that make the space feel hand-made</li>
+          <li><strong>Mosaic work</strong> — pressed into soft plaster or cob. Salvage tile, local ceramics, collected pieces.</li>
+          <li><strong>Screened porch</strong> — structure off the bedroom, screen panels, outdoor bed platform</li>
+          <li><strong>Stone patio</strong> — fieldstone from the land, wrapping the south and east faces</li>
+          <li><strong>Roughed-in landscaping</strong> — paths defined, raised beds built, perennial framework planted</li>
+          <li><strong>Final inspection and certificate of occupancy</strong></li>
+        </ul>
+        <div class="tl-note">Move-in does not require the cob work to be complete. Many natural builders move in and finish the sculptural details while living in the space over months — which is actually the right way to do it. The house teaches you where it wants its details.</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-marker">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Month 20+</div>
+      </div>
+      <div class="tl-content">
+        <div class="tl-title"><em>Home.</em></div>
+        <p class="tl-body">The building is complete. The garden is two seasons old. The fruit trees are in their third year — two more before the first harvest. The land knows who lives there. The walls have been touched by your hands. The house smells like earth and lime and wood. This is the one.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FULL BUDGET -->
+<section class="fade-in">
+  <div class="section-label">The Complete Budget</div>
+  <h2>Every line item.<br><em>All in.</em></h2>
+  <p>Land at $75,000. Remote Appalachian site — driveway and site work budgeted toward the higher end. Partial owner-builder participation in hempcrete laying, cob work, and landscaping. All infrastructure included.</p>
+
+  <div class="budget-wrap">
+
+    <div class="budget-category">Land</div>
+    <table class="budget">
+      <tr><td>Land purchase</td><td>Remote, Asheville area, 2–5 acres</td><td>$75,000</td></tr>
+    </table>
+
+    <div class="budget-category">Design & Permits</div>
+    <table class="budget">
+      <tr><td>Architect / designer</td><td>Tim Callahan or April Magill — design, engineering coord, permit drawings, site oversight</td><td>$15,000–28,000</td></tr>
+      <tr><td>Structural engineer</td><td>Timber frame + hempcrete wall calcs — typically coordinated through architect</td><td>$4,000–8,000</td></tr>
+      <tr><td>Building permits</td><td>Madison/Yancey County — less friction, lower fees than Buncombe</td><td>$2,000–5,000</td></tr>
+      <tr><td>Workshop (Karen George)</td><td>Hands-on hempcrete before breaking ground</td><td>$200–400</td></tr>
+      <tr class="total"><td>Subtotal</td><td></td><td>$21,200–41,400</td></tr>
+    </table>
+
+    <div class="budget-category">Site Development</div>
+    <table class="budget">
+      <tr><td>Driveway</td><td>Grading, clearing, gravel — remote site adds cost</td><td>$8,000–20,000</td></tr>
+      <tr><td>Well</td><td>Drilling, pump, pressure tank — biggest WNC wildcard</td><td>$10,000–22,000</td></tr>
+      <tr><td>Septic system</td><td>Conventional 3-bedroom sized</td><td>$8,000–15,000</td></tr>
+      <tr><td>Solar system</td><td>Panels, lithium battery bank, inverter — full off-grid</td><td>$12,000–20,000</td></tr>
+      <tr><td>Rain barrels</td><td>1,500 gal, integrated into roof drainage</td><td>$1,500–3,500</td></tr>
+      <tr><td>Site clearing</td><td>Build footprint and staging area</td><td>$3,000–8,000</td></tr>
+      <tr class="total"><td>Subtotal</td><td></td><td>$42,500–88,500</td></tr>
+    </table>
+
+    <div class="budget-category">Structure & Shell</div>
+    <table class="budget">
+      <tr><td>Foundation</td><td>Rubble trench + concrete grade beam, fieldstone from land</td><td>$12,000–20,000</td></tr>
+      <tr><td>Timber frame</td><td>Local rough-sawn Appalachian hardwood, posts + beams + rafters</td><td>$12,000–22,000</td></tr>
+      <tr><td>Hemp block walls</td><td>Materials — 8" blocks, 1,500 sq ft of wall, domestic supply</td><td>$18,000–27,000</td></tr>
+      <tr><td>Hemp block labor</td><td>Masonry laying — partial owner-builder reduces this significantly</td><td>$8,000–15,000</td></tr>
+      <tr><td>Metal roof</td><td>Standing seam, generous overhangs, 50-year lifespan</td><td>$18,000–28,000</td></tr>
+      <tr><td>Loft platform + stair</td><td>Structural platform, open wood stair or ship's ladder, railing</td><td>$8,000–16,000</td></tr>
+      <tr class="total"><td>Subtotal</td><td></td><td>$76,000–128,000</td></tr>
+    </table>
+
+    <div class="budget-category">Windows, Doors & Openings</div>
+    <table class="budget">
+      <tr><td>Large fixed glass</td><td>4–5 light-gathering windows, simple frames — you source locally or salvage</td><td>$4,000–8,000</td></tr>
+      <tr><td>Operable windows</td><td>4–6 casement or awning style for ventilation</td><td>$3,000–6,000</td></tr>
+      <tr><td>Loft skylight</td><td>Fixed, well-flashed — the star-gazing feature</td><td>$1,500–3,500</td></tr>
+      <tr><td>French / patio door</td><td>Off bedroom to screened porch</td><td>$2,000–4,500</td></tr>
+      <tr><td>Two interior doors</td><td>Bedroom + toilet room — solid wood, simple</td><td>$800–1,800</td></tr>
+      <tr><td>Entry door</td><td>Salvage or local craftsperson — beautiful and meaningful</td><td>$500–2,000</td></tr>
+      <tr class="total"><td>Subtotal</td><td></td><td>$11,800–25,800</td></tr>
+    </table>
+
+    <div class="budget-category">Surfaces & Finishes</div>
+    <table class="budget">
+      <tr><td>Earthen plaster interior</td><td>2 coats, all walls, directly onto hemp blocks — no drywall</td><td>$5,000–9,000</td></tr>
+      <tr><td>Lime render exterior</td><td>2 coats, protects hempcrete from Asheville rainfall</td><td>$4,000–8,000</td></tr>
+      <tr><td>Cork floors</td><td>Main level + loft, warm and natural underfoot</td><td>$5,000–9,000</td></tr>
+      <tr><td>Cob sculptural details</td><td>Heater surround, niches, window reveals, built-in bench — owner-builder reduces this</td><td>$4,000–10,000</td></tr>
+      <tr class="total"><td>Subtotal</td><td></td><td>$18,000–36,000</td></tr>
+    </table>
+
+    <div class="budget-category">Wet Core — Kitchen, Bathrooms & Plumbing</div>
+    <table class="budget">
+      <tr><td>Kitchen</td><td>Open shelving, natural counter, propane range, deep sink, pantry</td><td>$8,000–15,000</td></tr>
+      <tr><td>Bathroom</td><td>Soaking tub, tadelakt shower, long vanity, mosaic wall</td><td>$7,000–13,000</td></tr>
+      <tr><td>Toilet room</td><td>Euro style, extra sink — separate from main bathroom</td><td>$2,000–4,000</td></tr>
+      <tr><td>Instahot water heater</td><td>Propane on-demand tankless — minimal, efficient</td><td>$1,200–2,500</td></tr>
+      <tr><td>All plumbing rough + finish</td><td>Simple layout — wet core on one wall</td><td>$8,000–14,000</td></tr>
+      <tr class="total"><td>Subtotal</td><td></td><td>$26,200–48,500</td></tr>
+    </table>
+
+    <div class="budget-category">Heating & Electrical</div>
+    <table class="budget">
+      <tr><td>Rocket mass heater / wood stove</td><td>Primary heat — cob surround built-in above</td><td>$3,500–7,000</td></tr>
+      <tr><td>Mini-split (1–2 heads)</td><td>Heating + cooling backup, solar powered</td><td>$2,500–4,500</td></tr>
+      <tr><td>Radiant floor rough-in</td><td>Optional — stub in during slab pour for future activation</td><td>$0–6,000</td></tr>
+      <tr><td>Full electrical</td><td>Panel, wiring, outlets, lighting, solar connection</td><td>$8,000–14,000</td></tr>
+      <tr class="total"><td>Subtotal</td><td></td><td>$14,000–31,500</td></tr>
+    </table>
+
+    <div class="budget-category">Additional Features</div>
+    <table class="budget">
+      <tr><td>Screened porch</td><td>Off bedroom, same roofline extended, outdoor bed platform, screens</td><td>$12,000–22,000</td></tr>
+      <tr><td>Stone patio</td><td>Fieldstone from land, wrapping south and east faces, ~300 sq ft</td><td>$4,000–9,000</td></tr>
+      <tr><td>Rough landscaping</td><td>Paths, raised beds, fruit trees x6, perennial framework, basic grading</td><td>$5,000–12,000</td></tr>
+      <tr class="total"><td>Subtotal</td><td></td><td>$21,000–43,000</td></tr>
+    </table>
+
+  </div>
+
+  <div class="grand-total">
+    <div class="grand-total-label">Grand Total · All In · Including Land</div>
+    <div class="grand-total-range"><em>$305,000</em> — <em>$517,000</em></div>
+    <div class="grand-total-mid">Realistic mid-range with partial owner-builder participation: <strong>$360,000–400,000</strong></div>
+  </div>
+
+  <div style="margin-top:2rem;">
+    <h3>How to bring it within budget</h3>
+    <p>The gap between the mid-range and your $300,000–350,000 target is closed primarily through three levers. First, site selection — a gentle, accessible parcel with good road frontage saves $20,000–40,000 in driveway and site work alone compared to a steep remote lot. Second, owner-builder participation in the hempcrete laying phase — this is genuinely learnable and directly reduces the largest labor line item. Third, phasing the cob details, screened porch, and stone patio into year two rather than building everything at once. The house is livable before those elements are complete. The land is patient.</p>
+  </div>
+</section>
+
+<!-- THE HOUSE ITSELF -->
+<section class="fade-in">
+  <div class="section-label">The Building</div>
+  <h2>What is actually<br><em>being built</em></h2>
+  <p>900 square feet plus loft. A simple rectangle — Portuguese farmhouse form — with a soul that is entirely Appalachian. Two interior doors. Everything else open. The walls are hemp. The surfaces are earth. The ceiling is wood. The floor is cork. The light comes from everywhere.</p>
+
+  <h3>The Form</h3>
+  <p>Approximately 24 x 38 feet. South-facing for maximum light and passive solar gain. Shed or simple gable roof with generous 2–3 foot overhangs protecting the earthen walls. Standing seam metal roofing. No basement. Vaulted ceiling in the main space rising to the ridge. Loft platform at 8–9 feet occupying roughly half the floor area, sleeping under the slope of the roof with a fixed skylight directly overhead.</p>
+
+  <h3>The Wall Logic</h3>
+  <p>Timber frame is the bones — local Appalachian hardwood posts and beams, rough-sawn with natural character. Hemp blocks are the body — laid like masonry around the frame, 8 inches thick at R-16, pre-cured and ready. Earthen plaster inside, lime render outside — the skin. No drywall anywhere. No siding. No house wrap. No synthetic materials in the wall assembly. The wall is complete in three natural layers.</p>
+
+  <h3>Light & Openings</h3>
+  <p>Large fixed glass windows on the south face — permanent, permanent light, deep hempcrete reveals that are one of the most beautiful features of a natural building. Operable casements on the east and west for cross-ventilation. Skylight over the loft. French doors off the bedroom to the screened porch. The windows that can be plastered partially in — thick plastered sills, deep frames — are not a compromise. They are an advantage.</p>
+
+  <h3>Two Doors Only</h3>
+  <p>One for the bedroom. One for the toilet room. Everything else — the kitchen, the bathroom shower and tub, the living space, the loft — flows as a single open volume. The shower at the edge of the living space, as in Costa Rica. The kitchen continuous with the dining and sitting. The loft open above. The bedroom the one private sanctuary, opening with French doors to the porch and through those to the screened sleeping space beyond.</p>
+
+  <h3>The Cob Interior</h3>
+  <p>The earthen plaster covers all wall surfaces. The cob builds up from there — the rocket mass heater surround as the visual and thermal anchor of the space, a built-in bench along one hempcrete wall, sculpted niches for books and objects and light, the deep window reveals shaped by hand. Mosaic pressed into soft plaster at the bathroom feature wall. The building becomes the art project while you live in it. There is no deadline on this work. It is the ongoing conversation between you and the building.</p>
+</section>
+
+<footer>
+  A living document — Asheville, Western North Carolina &nbsp;·&nbsp; The build that arrived through the dreaming
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.07 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
